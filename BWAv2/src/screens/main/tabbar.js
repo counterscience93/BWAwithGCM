@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { Icon, SearchBar, TabBar } from '@ant-design/react-native';
 import LocationA from "../maps/LocationA";
+import Login from "../login/login";
 export default class MyTabBar extends React.Component {
     constructor(props) {
         super(props);
@@ -60,7 +61,7 @@ export default class MyTabBar extends React.Component {
                     selected={this.state.selectedTab === 'yellowTab'}
                     onPress={() => this.onChangeTab('yellowTab')}
                 >
-                    {this.renderContent("LOGIN")}
+                    <Login/>
                 </TabBar.Item>
             </TabBar>
         );

@@ -1,45 +1,68 @@
 import React, { Component } from "react";
-import { AppRegistry, StyleSheet, Dimensions, Image, View, StatusBar, TouchableOpacity } from "react-native";
+import { AppRegistry, StyleSheet, Dimensions, Image, View, StatusBar, PermissionsAndroid } from "react-native";
 import { Container, Text } from "native-base";
 
 import MapView from 'react-native-maps';
 import Polyline from '@mapbox/polyline';
 
-
 class LocationA extends Component {
-    constructor(props) {
-        super(props);
+    state = {
+        latitude: null,
+        longitude: null,
+        error: null,
+        concat: null,
+        coords:[],
+        x: 'false',
+        cordLatitude:10.8417196,
+        cordLongitude:106.6667826,
+    };
 
-        this.state = {
-            latitude: null,
-            longitude: null,
-            error: null,
-            concat: null,
-            coords:[],
-            x: 'false',
-            cordLatitude:10.8417196,
-            cordLongitude:106.6667826,
-        };
-
-        this.mergeLot = this.mergeLot.bind(this);
-
-    }
+    requestAccessLocationPermission = async  () => {
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+                {
+                    title: 'Access Your location Permission',
+                    message:
+                        'Bikeworld app need access your location ' +
+                        'to take awesome suggest.',
+                    buttonNeutral: 'Ask Me Later',
+                    buttonNegative: 'Cancel',
+                    buttonPositive: 'OK',
+                },
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                console.log('You can access location');
+            } else {
+                console.log('Permission denied');
+            }
+        } catch (err) {
+            console.warn(err);
+        }
+    };
 
     componentDidMount() {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                console.log(position);
-                this.setState({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
-                    error: null,
-                });
-                this.mergeLot();
-            },
-            (error) => this.setState({ error: error.message }),
-            { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
-        );
-
+        var getPermission = this.requestAccessLocationPermission();
+        console.log(getPermission);
+        if(getPermission){
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    console.log(position.valueOf());
+                    this.setState({
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                        error: null,
+                    });
+                    this.mergeLot();
+                },
+                (error) => this.setState({ error: error.message }),
+                {
+                    enableHighAccuracy: false,
+                    timeout: 200000,
+                    maximumAge: 1000
+                },
+            );
+        }
     }
 
     mergeLot(){
@@ -67,13 +90,15 @@ class LocationA extends Component {
                     latitude : point[0],
                     longitude : point[1]
                 }
-            })
-            this.setState({coords: coords})
-            this.setState({x: "true"})
+            });
+            console.log('coords');
+            console.log(coords);
+            this.setState({coords: coords});
+            this.setState({x: "true"});
             return coords
         } catch(error) {
-            console.log('masuk fungsi')
-            this.setState({x: "error"})
+            console.log("AAA" + error.toString());
+            this.setState({x: "error"});
             return error
         }
     }
@@ -83,8 +108,8 @@ class LocationA extends Component {
             <MapView style={styles.map} initialRegion={{
                 latitude:10.8416627,
                 longitude:106.6670889,
-                latitudeDelta: 0.015*5,
-                longitudeDelta: 0.0121*5,
+                latitudeDelta: 0.015*1,
+                longitudeDelta: 0.0121*1,
             }}>
 
                 {!!this.state.latitude && !!this.state.longitude && <MapView.Marker
@@ -96,6 +121,10 @@ class LocationA extends Component {
                     coordinate={{"latitude":this.state.cordLatitude,"longitude":this.state.cordLongitude}}
                     title={"Your Destination"}
                 />}
+                {!!this.state.cordLatitude && !!this.state.cordLongitude && <MapView.Marker
+                    coordinate={{"latitude":10.842006,"longitude":106.667183}}
+                    title={"Your Destination2"}
+                />}
 
                 {!!this.state.latitude && !!this.state.longitude && this.state.x === 'true' && <MapView.Polyline
                     coordinates={this.state.coords}
@@ -103,7 +132,7 @@ class LocationA extends Component {
                     strokeColor="red"/>
                 }
 
-                {!!this.state.latitude && !!this.state.longitude && this.state.x == 'error' && <MapView.Polyline
+                {!!this.state.latitude && !!this.state.longitude && this.state.x === 'error' && <MapView.Polyline
                     coordinates={[
                         {latitude: this.state.latitude, longitude: this.state.longitude},
                         {latitude: this.state.cordLatitude, longitude: this.state.cordLongitude},
