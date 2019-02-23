@@ -29,6 +29,9 @@ export default class LoginForm extends Component{
               <TouchableOpacity style={styles.buttonContainer}>
                   <Text style={styles.buttonText}>Login</Text>
               </TouchableOpacity>
+              <TouchableOpacity style={styles.buttonContainer}>
+                  <Text style={styles.buttonText}>Sign up</Text>
+              </TouchableOpacity>
 
           </View>
         );
