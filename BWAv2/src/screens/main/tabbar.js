@@ -3,6 +3,7 @@ import { Text, View } from 'react-native';
 import { Icon, SearchBar, TabBar } from '@ant-design/react-native';
 import LocationA from "../maps/LocationA";
 import Login from "../login/login";
+import ArticleView from "../../components/articleView";
 export default class MyTabBar extends React.Component {
     constructor(props) {
         super(props);
@@ -36,7 +37,7 @@ export default class MyTabBar extends React.Component {
                     selected={this.state.selectedTab === 'blueTab'}
                     onPress={() => this.onChangeTab('blueTab')}
                 >
-                    <Text>HOME</Text>
+                    <ArticleView/>
                 </TabBar.Item>
                 <TabBar.Item
                     icon={<Icon name="ordered-list" />}
