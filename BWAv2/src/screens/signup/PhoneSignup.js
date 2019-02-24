@@ -6,7 +6,7 @@ import {
     StyleSheet, Text
 } from 'react-native'
 
-export default class SignUp extends React.Component {
+export default class PhoneSignup extends React.Component {
     state = {
         phone_number: ''
     };

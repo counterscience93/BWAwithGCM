@@ -1,7 +1,12 @@
 import React, {Component} from 'react';
 import {View,Text, StyleSheet, Image, KeyboardAvoidingView} from 'react-native';
 import LoginForm from '../../components/loginForm';
+import {Button} from "@ant-design/react-native";
 export default class Login extends Component{
+    state ={}
+    onPress = () => {
+        this.props.navigation.navigate('SignUp');
+    }
     render(){
         return (
            <KeyboardAvoidingView behavior="padding" style={styles.container}>

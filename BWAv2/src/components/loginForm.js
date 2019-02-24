@@ -1,7 +1,14 @@
 import React, {Component} from 'react';
 import {View, TextInput, StyleSheet, TouchableOpacity, Text, StatusBar} from 'react-native';
+import {withNavigation} from 'react-navigation';
+class LoginForm extends Component{
+    state = {
 
-export default class LoginForm extends Component{
+    };
+    OnpressSignUp = () => {
+        this.props.navigation.navigate('SignUp')
+    };
+
     render(){
         return (
           <View style={styles.container}>
@@ -29,7 +36,9 @@ export default class LoginForm extends Component{
               <TouchableOpacity style={styles.buttonContainer}>
                   <Text style={styles.buttonText}>Login</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.buttonContainer}
+                                onPress={this.OnpressSignUp}
+              >
                   <Text style={styles.buttonText}>Sign up</Text>
               </TouchableOpacity>
 
@@ -51,6 +60,7 @@ const styles = StyleSheet.create({
     buttonContainer:{
         backgroundColor: '#2980b9',
         paddingVertical: 15,
+        marginBottom: 10,
     },
     buttonText: {
         textAlign: 'center',
@@ -58,3 +68,5 @@ const styles = StyleSheet.create({
         fontWeight: '700'
     }
 });
+
+export default withNavigation(LoginForm);

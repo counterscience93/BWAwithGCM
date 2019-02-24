@@ -5,7 +5,7 @@ import { Container, Text } from "native-base";
 import MapView from 'react-native-maps';
 import Polyline from '@mapbox/polyline';
 
-class LocationA extends Component {
+class GoogleMapLocation extends Component {
     state = {
         latitude: null,
         longitude: null,
@@ -155,4 +155,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default LocationA;
+export default GoogleMapLocation;

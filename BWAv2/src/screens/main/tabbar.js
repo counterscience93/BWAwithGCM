@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { Icon, SearchBar, TabBar } from '@ant-design/react-native';
-import LocationA from "../maps/LocationA";
+import GoogleMapLocation from "../maps/GoogleMapLocation";
 import Login from "../login/login";
 import ArticleView from "../../components/articleView";
 export default class MyTabBar extends React.Component {
@@ -54,7 +54,7 @@ export default class MyTabBar extends React.Component {
                     selected={this.state.selectedTab === 'greenTab'}
                     onPress={() => this.onChangeTab('greenTab')}
                 >
-                    <LocationA/>
+                    <GoogleMapLocation/>
                 </TabBar.Item>
                 <TabBar.Item
                     icon={<Icon name="user" />}
